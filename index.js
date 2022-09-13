@@ -55,9 +55,11 @@ function playRound(playerSelection, computerSelection) {
   return playerPoints;
 }
 
+/* define global variable*/
 let playerPoints = 0;
 let computerPoints = 0;
 
+/*starts a game of five rounds*/
 function game() {
   for (let i = 0; i < 5; i++) {
     computerSelection = getComputerChoice();
@@ -75,4 +77,5 @@ function game() {
   }
 }
 
+/* function call*/
 game();

@@ -37,7 +37,7 @@ function playRound(playerSelection, computerSelection) {
     console.log("Rock beats Scissor, you win!");
     ++playerPoints;
   } else if (playerSelection === "paper" && computerSelection === "rock") {
-    console.log("Rock beats Paper, you win!");
+    console.log("Paper beats Rock, you win!");
     ++playerPoints;
   } else if (playerSelection === "paper" && computerSelection === "scissor") {
     console.log("Scissor beats Paper, you lose");

@@ -1,81 +1,74 @@
-console.log("Start");
-
-/* Random computerChoice */
+/* random computerChoice */
 function getComputerChoice() {
   let choices = ["rock", "paper", "scissor"];
   if (choices.length <= 0) {
     return "Error";
   }
-
   /* random number from 0 to 0.99 */
   let index = Math.floor(Math.random() * choices.length);
   if (index >= choices.length || index < 0) {
     return choices[0];
   }
-
   /* random choice from  choices array */
   let computerSelection = choices[index];
-  console.log(computerSelection); /* logs computer choice to console*/
   return computerSelection;
-}
-
-/* prompt to enter player Choice to lowercase*/
-function getPlayerChoice() {
-  let playerSelection = prompt("Enter Rock, Paper or Scissor!");
-  playerSelection = playerSelection.toLowerCase(); /*convert to small letters*/
-  return playerSelection;
 }
 
 /* win or lose algo*/
 function playRound(playerSelection, computerSelection) {
   if (playerSelection === computerSelection) {
-    console.log("Draw!");
+    playFeed.textContent = "Draw, try again ";
   } else if (playerSelection === "rock" && computerSelection === "paper") {
-    console.log("Paper beats Rock! You lose!");
+    playFeed.textContent = "Paper beats Rock! You LOSE!";
     ++computerPoints;
   } else if (playerSelection === "rock" && computerSelection === "scissor") {
-    console.log("Rock beats Scissor, you win!");
+    playFeed.textContent = "Rock beats Scissor, you WIN!";
     ++playerPoints;
   } else if (playerSelection === "paper" && computerSelection === "rock") {
-    console.log("Paper beats Rock, you win!");
+    playFeed.textContent = "Paper beats Rock, you WIN!";
     ++playerPoints;
   } else if (playerSelection === "paper" && computerSelection === "scissor") {
-    console.log("Scissor beats Paper, you lose");
+    playFeed.textContent = "Scissor beats Paper, you LOSE";
     ++computerPoints;
   } else if (playerSelection === "scissor" && computerSelection === "rock") {
-    console.log("Rock beats Scissor, you lose!");
+    playFeed.textContent = "Rock beats Scissor, you LOSE!";
     ++computerPoints;
   } else if (playerSelection === "scissor" && computerSelection === "paper") {
-    console.log("Scissor cuts Paper, you win");
+    playFeed.textContent = "Scissor cuts Paper, you WIN";
     ++playerPoints;
   } else {
-    console.log("Wrong input!");
+    playFeed.textContent = "Wrong input!";
   }
   console.log(playerPoints);
   return playerPoints;
+  return computerPoints;
 }
+
+function youWon() {}
+function youLost() {}
 
 /* define global variable*/
+
 let playerPoints = 0;
 let computerPoints = 0;
+const roundsToWin = 5;
+const btns = document.querySelectorAll("button");
+const playFeed = document.getElementById("playFeed");
+const playerScore = document.getElementById("playerScore");
+const computerScore = document.getElementById("computerScore");
 
-/*starts a game of five rounds*/
-function game() {
-  for (let i = 0; i < 5; i++) {
-    computerSelection = getComputerChoice();
-    playerSelection = getPlayerChoice();
-    playRound(playerSelection, computerSelection, playerPoints);
+if (playerPoints < roundsToWin && computerPoints < roundsToWin) {
+  function play() {
+    let computerSelection = getComputerChoice();
+    let playerSelection = this.classList.value;
+    playRound(playerSelection, computerSelection);
 
-    console.log("Player: " + playerPoints, "Computer: " + computerPoints);
+    playerScore.textContent = "Player: " + playerPoints;
+    computerScore.textContent = "CPU: " + computerPoints;
   }
-  if (computerPoints > playerPoints) {
-    console.log("You have lost!");
-  } else if (computerPoints < playerPoints) {
-    console.log("You Won!");
-  } else {
-    console.log("Draw!");
-  }
+} else if (playerPoints === roundsToWin) {
+  playFeed.textContent = "You WON the Game!";
+} else if (computerPoints === roundsToWin) {
+  playFeed.textContent = "You LOST, Looser!";
 }
-
-/* function call*/
-game();
+btns.forEach((btns) => btns.addEventListener("click", play));

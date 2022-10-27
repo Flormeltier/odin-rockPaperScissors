@@ -1,3 +1,13 @@
+/* define global variable*/
+
+let playerPoints = 0;
+let computerPoints = 0;
+const roundsToWin = 5;
+const btns = document.querySelectorAll("button");
+const playFeed = document.getElementById("playFeed");
+const playerScore = document.getElementById("playerScore");
+const computerScore = document.getElementById("computerScore");
+
 /* random computerChoice */
 function getComputerChoice() {
   let choices = ["rock", "paper", "scissor"];
@@ -44,31 +54,43 @@ function playRound(playerSelection, computerSelection) {
   return computerPoints;
 }
 
-function youWon() {}
-function youLost() {}
+function updateScore() {
+  playerScore.textContent = "Player: " + playerPoints;
+  computerScore.textContent = "CPU: " + computerPoints;
+}
 
-/* define global variable*/
+function resetGame() {
+  playerPoints = 0;
+  computerPoints = 0;
+  updateScore();
+}
 
-let playerPoints = 0;
-let computerPoints = 0;
-const roundsToWin = 5;
-const btns = document.querySelectorAll("button");
-const playFeed = document.getElementById("playFeed");
-const playerScore = document.getElementById("playerScore");
-const computerScore = document.getElementById("computerScore");
+function youWon() {
+  playFeed.textContent = "You WON the Game!";
+  console.log("You won the game");
+  resetGame();
+}
 
-if (playerPoints < roundsToWin && computerPoints < roundsToWin) {
-  function play() {
+function youLost() {
+  playFeed.textContent = "You LOST, Looser!";
+  console.log("You lost the game");
+  resetGame();
+}
+
+function play() {
+  if (playerPoints >= roundsToWin) {
+    // Win Game Roundw
+    youWon();
+  } else if (computerPoints >= roundsToWin) {
+    // Loose Game Round
+    youLost();
+  } else {
+    // Play Round
     let computerSelection = getComputerChoice();
     let playerSelection = this.classList.value;
     playRound(playerSelection, computerSelection);
-
-    playerScore.textContent = "Player: " + playerPoints;
-    computerScore.textContent = "CPU: " + computerPoints;
+    updateScore();
   }
-} else if (playerPoints === roundsToWin) {
-  playFeed.textContent = "You WON the Game!";
-} else if (computerPoints === roundsToWin) {
-  playFeed.textContent = "You LOST, Looser!";
 }
+
 btns.forEach((btns) => btns.addEventListener("click", play));
